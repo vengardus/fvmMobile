@@ -1,5 +1,7 @@
 {
   "name": "fvm",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

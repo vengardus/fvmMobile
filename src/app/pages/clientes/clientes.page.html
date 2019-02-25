@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-buttons slot="start">
+      <ion-back-button defaulHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="isRuta=='1'; else titleNoRuta">Clienes En Ruta</ion-title>
+    <ng-template #titleNoRuta>
+      <ion-title>Clientes Fuera de Ruta</ion-title>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-searchbar [(ngModel)]='searchValue' (ionChange)='searchChanged($event)' showCancelButton='true' debounce="500"></ion-searchbar>
+
+  <ion-list *ngIf="message.length>0">
+    <ion-item *ngFor="let item of (message)">
+      <ion-label text-wrap>
+        {{item}}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list lines='none' *ngFor="let cliente of (aTOClientes)">
+    
+    <ng-container *ngIf="isRuta=='1'; then showRuta else showFueraRuta "></ng-container>
+      
+      <ng-template #showRuta >
+        <div *ngIf="cliente.diaRuta==parametros.diaRuta; then showCliente"></div>
+      </ng-template>
+
+      <ng-template #showFueraRuta  >
+        <div *ngIf="cliente.diaRuta!=parametros.diaRuta; then showCliente"></div>
+      </ng-template>
+
+      <ng-template #showCliente>
+        <ion-item button (click)="goInfoCliente(cliente)">
+
+          <ion-label *ngIf="cliente.tiposPersona_id != lGlobals.TIPO_PERSONA_JURIDICA" text-wrap>
+            <h2>{{(cliente.apepat + cliente.apemat + ', ' + cliente.nombres).toUpperCase()}}</h2>
+            <h3>{{cliente.direccion.toUpperCase()}}</h3>
+          </ion-label>
+
+          <ion-label *ngIf="cliente.tiposPersona_id == lGlobals.TIPO_PERSONA_JURIDICA" text-wrap>
+            <h2>{{cliente.razonSocial.toUpperCase()}}</h2>
+            <h3>{{cliente.direccion.toUpperCase()}}</h3>
+          </ion-label>
+
+          <ion-icon slot='end' *ngIf="cliente.estadoAtencion=='A'" name='checkmark-circle' color='success'></ion-icon>
+          <ion-icon slot='end' *ngIf="cliente.estadoAtencion!='A'" name='checkmark-circle-outline' color='danger'></ion-icon>
+
+        </ion-item>
+      </ng-template>
+
+  </ion-list>
+  
+  <ion-button #btnLogin expand="full"  (click)="filtro()">
+    Filtro
+  </ion-button>
+  <ion-button #btnLogin expand="full"  (click)="noFiltro()">
+    No Filtro
+  </ion-button>
+  
+
+  </ion-content>

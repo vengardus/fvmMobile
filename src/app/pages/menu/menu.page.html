@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button defaulHref="/"></ion-back-button>
+    </ion-buttons>
+</ion-header>
+
+<ion-content padding>
+  <ion-button #btnLogin expand="full"  (click)="clientesRuta()">
+    Clientes En Ruta
+  </ion-button>
+  <ion-button #btnLogin expand="full"  (click)="clientesFueraRuta()">
+    Clientes Fuera de Ruta
+  </ion-button>
+</ion-content>
