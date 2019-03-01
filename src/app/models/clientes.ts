@@ -1,7 +1,5 @@
 import { Globals } from '../config/globals';
 
-import { from } from 'rxjs';
-import { timingSafeEqual } from 'crypto';
 export class TOClientes {
     id:number;
 	tiposPersona_id:string;
@@ -47,7 +45,7 @@ export class TOClientes {
         this.numeroRuc = numeroRuc;
         this.telefono = telefono;
         this.celular = celular;
-        this.direccion = direccion;
+        this.direccion = (direccion!=null)?direccion:'';
         this.diaRuta = diaRuta;
         this.zonaCod = zonaCod;
         this.estadoAtencion = estadoAtencion;
@@ -115,7 +113,7 @@ export class Clientes{
     getContacto():string {
         let contacto = '';
         if ( this.oTOClientes.tiposPersona_id == Globals.TIPO_PERSONA_JURIDICA
-            && this.oTOClientes.nombres.trim.length
+            && this.oTOClientes.nombres.trim().length
         ) {
             contacto = this.oTOClientes.apepat + ' ' + this.oTOClientes.apemat + ', ' + this.oTOClientes.nombres;
             contacto = contacto + ' (DNI: ' + this.oTOClientes.numeroDocIden + ')';
@@ -126,7 +124,7 @@ export class Clientes{
     getTelefonos():string {
         let telefonos = '';;
         telefonos = telefonos + this.oTOClientes.telefono;
-        if ( telefonos.trim.length && this.oTOClientes.celular.trim.length ) 
+        if ( telefonos.trim().length && this.oTOClientes.celular.trim().length ) 
             telefonos = telefonos + ' - ';
         telefonos = telefonos + this.oTOClientes.celular;
         return telefonos;

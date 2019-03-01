@@ -59,7 +59,7 @@ export class LoginPage implements OnInit {
         }
       },
       err => {
-        this.message.push(`Se produjo un error: ${err}`);
+        this.message.push(`Se produjo un error: ${err.message}`);
       }
     );
   }

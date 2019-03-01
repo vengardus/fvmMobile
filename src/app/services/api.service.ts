@@ -14,7 +14,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  url = 'http://127.0.0.1/demopvta/api/';
+  //url = 'http://127.0.0.1/demopvta/api/';
+  url = 'https://ismytv.webcindario.com/api/'
   apiKey = '1d957976';
 
   constructor(
@@ -22,6 +23,7 @@ export class ApiService {
 
   getCatalog(catalog: string) {
     let urlFull = `${this.url}?cat=${encodeURI(catalog)}&apikey=${this.apiKey}`;
+    console.log('GET', urlFull);
     return this.http.get(urlFull)
       .pipe(
         map(results => {
@@ -46,15 +48,19 @@ export class ApiService {
     }
     console.log('Error:', errorMessage);
     return throwError(errorMessage);
-  }
+  };
 
   login(username: string, password: string) {
-    let url = 'http://127.0.0.1/demopvta/api/p/login.php';
+    let urlFull = this.url + 'p/login.php';
     let data = {
       'login':username,
       'password':password
     };
-    return this.http.post(url, JSON.stringify(data) );
+    let postData = new FormData();
+    postData.append('login' , username);
+    postData.append('password' , password);
+    console.log(urlFull);
+    return this.http.post(urlFull, postData );
   }
 
   getConfig() {

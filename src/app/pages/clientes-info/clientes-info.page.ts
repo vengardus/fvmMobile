@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { Globals } from 'src/app/config/globals';
 import { Clientes } from 'src/app/models/clientes';
-import { timingSafeEqual } from 'crypto';
 
 @Component({
   selector: 'app-clientes-info',
