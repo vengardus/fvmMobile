@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { Globals } from 'src/app/config/globals';
-import { Clientes } from 'src/app/models/clientes';
+import { Clientes } from '../../models/clientes';
 
 @Component({
   selector: 'app-clientes-info',
@@ -46,7 +46,7 @@ export class ClientesInfoPage implements OnInit {
       console.log('data', data);
       let cliente = data;
       this.oClientes = new Clientes();
-      this.oClientes.addCliente(data);
+      this.oClientes.add(data);
     })
   }
 

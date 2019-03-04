@@ -1,0 +1,14 @@
+     login : string
+     password : string
+     nombreVendedor : string
+     codigoVendedor : string
+     fechaRuta: string
+     diaRuta: string
+     zonaCod: string
+     monedas_id : string
+     isMonedaDoble:  boolean
+     iva : number
+     isc: number
+     isCredito: boolean
+     isLogged: boolean
+     isPrevPayment: boolean

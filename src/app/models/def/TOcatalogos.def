@@ -1,0 +1,8 @@
+id:string
+nombre:string
+descripcion:string
+obligatorio:boolean
+update:boolean
+send:boolean
+recv:number
+saved:number

@@ -1,0 +1,6 @@
+id:number
+codigo:string
+descripcion:string
+precioUnitario:number
+descuento:number
+tiposDescuento_id:string

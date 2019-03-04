@@ -14,8 +14,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  //url = 'http://127.0.0.1/demopvta/api/';
-  url = 'https://ismytv.webcindario.com/api/'
+  url = 'http://127.0.0.1/demopvta/api/';
+  //url = 'https://ismytv.webcindario.com/api/'
   apiKey = '1d957976';
 
   constructor(

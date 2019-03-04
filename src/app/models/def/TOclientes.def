@@ -1,0 +1,15 @@
+    id:number
+	tiposPersona_id:string
+	apepat:string
+	apemat:string
+	nombres:string
+	razonSocial:string
+	tiposDocIden_id:string
+	numeroDocIden:string
+	numeroRuc:string
+	telefono:string
+	celular:string
+    direccion:string
+    diaRuta:string
+    zonaCod:string
+    estadoAtencion:string

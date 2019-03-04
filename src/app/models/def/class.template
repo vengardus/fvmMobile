@@ -1,0 +1,37 @@
+import { TO<myClass> } from './to/TO<myclass>';
+
+
+export class <myClass>{
+    aTO<myClass>:TO<myClass>[]=[];
+    oTO<myClass>:TO<myClass>;
+
+    constructor ( ){}
+
+    add(item:any) {
+        let oTO<myClass> = new TO<myClass>(item);
+        this.aTO<myClass>.push(oTO<myClass>);
+        this.oTO<myClass> = oTO<myClass>;
+    }
+
+    add<myClass>(items:any) {
+        this.setATO<myClass>([]);
+        for ( let item of items ) 
+            this.add(item);
+    }
+
+    getATO<myClass>():TO<myClass>[] {
+        return this.aTO<myClass>;
+    }
+
+    setATO<myClass>(value) {
+        this.aTO<myClass> = value;
+    }
+
+    setOTO<myClass>(oTO<myClass>:TO<myClass>) {
+        this.oTO<myClass> = oTO<myClass>;
+    }
+
+    getOTO<myClass>():TO<myClass> {
+        return this.oTO<myClass>;
+    }
+}

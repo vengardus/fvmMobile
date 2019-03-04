@@ -1,10 +1,13 @@
 <ion-header>
   <ion-toolbar color='primary'>
-    <ion-title>Menu</ion-title>
-  </ion-toolbar>
     <ion-buttons slot="start">
-        <ion-back-button defaulHref="/"></ion-back-button>
+      <ion-back-button defaulHref="/"></ion-back-button>
     </ion-buttons>
+    <ion-title>Menu</ion-title>
+    <ion-button slot='end'  (click)="salirSesion()">
+        Salir Sesión
+    </ion-button>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
