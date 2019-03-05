@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-04 14:45:03.123523
+// Generate by @vengardus 2019-03-04 19:51:55.926766
 
 export class TOArticulos {
 

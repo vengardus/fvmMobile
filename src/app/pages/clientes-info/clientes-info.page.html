@@ -17,28 +17,28 @@
 
   <ion-card *ngIf="oClientes!=null && buttonId_selected==0">
     <ion-item lines='none'>
-      <b>{{oClientes.getNombreRazon()}}</b>
+      <b>{{oClientes.getNombreRazon(oClientes.getATOClientes()[0])}}</b>
     </ion-item>
     <ion-item lines='none'>
-      <b>{{oClientes.getOTOClientes().direccion}}</b>
+      <b>{{oClientes.getATOClientes()[0].getDireccion()}}</b>
     </ion-item>      
-    <ion-item lines='none' *ngIf="oClientes.getContacto().length">
-      Contacto: {{oClientes.getContacto()}}
+    <ion-item lines='none' *ngIf="oClientes.getContacto(oClientes.getATOClientes()[0]).length">
+      Contacto: {{oClientes.getContacto(oClientes.getATOClientes()[0])}}
     </ion-item>
     <ion-item lines='none'>
-      {{oClientes.getDocIden()}}
+      {{oClientes.getDocIden(oClientes.getATOClientes()[0])}}
     </ion-item>
     <ion-item>
-      Dia Ruta: {{oClientes.getOTOClientes().diaRuta}}
-      Frecuencia: {{oClientes.getOTOClientes().frecuenciaVisita}} 
+      Dia Ruta: {{oClientes.getATOClientes()[0].getDiaRuta()}}
+      Frecuencia: {{oClientes.getATOClientes()[0].getFrecuenciaVisita()}} 
     </ion-item>
     <ion-item lines='none'>
       <ion-icon slot='start' name='at'></ion-icon>
-      <ion-label>{{oClientes.getOTOClientes().email}}</ion-label>
+      <ion-label>{{oClientes.getATOClientes()[0].getEmail()}}</ion-label>
     </ion-item>
     <ion-item lines='none'>
     <ion-icon slot='start' name='call'></ion-icon>
-      <ion-label>{{oClientes.getTelefonos()}}</ion-label>
+      <ion-label>{{oClientes.getTelefonos(oClientes.getATOClientes()[0])}}</ion-label>
     </ion-item>
   </ion-card>
 

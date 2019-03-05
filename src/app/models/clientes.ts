@@ -1,21 +1,27 @@
-import { TOClientes } from './to/TOclientes';
-import { Globals } from '../config/globals';
+// Generate by @vengardus 2019-03-04 19:51:56.129859
+
+import { TOClientes } from 'src/app/models/to/TOclientes';
+import { Globals } from 'src/app/config/globals';
 
 export class Clientes{
-    aTOClientes:TOClientes[]=[];
-    oTOClientes:TOClientes;
+    private aTOClientes:TOClientes[]=[];
+    private dataStorage:any=null;
 
-    constructor ( ){}
-
-    add(item:any) {
-        let oTOClientes = new TOClientes(item);
-        this.aTOClientes.push(oTOClientes);
-        this.oTOClientes = oTOClientes;
+    constructor ( dataStorage?:any ) {
+        if ( dataStorage )
+            this.dataStorage = dataStorage;
     }
 
-    addClientes(items:any) {
-        this.setATOClientes([]);
-        for ( let item of items ) 
+    private add(item:any) {
+        let oTOClientes = new TOClientes(item);
+        this.aTOClientes.push(oTOClientes);
+    }
+
+    getAll(dataStorage?:any) {
+        this.aTOClientes = [];  
+        if ( dataStorage )      
+            this.dataStorage = dataStorage
+        for ( let item of this.dataStorage ) 
             this.add(item);
     }
 
@@ -23,52 +29,73 @@ export class Clientes{
         return this.aTOClientes;
     }
 
-    setATOClientes(value) {
+    setATOClientes(value:TOClientes[]) {
         this.aTOClientes = value;
     }
 
-    setOTOClientes(oTOClientes:TOClientes) {
-        this.oTOClientes = oTOClientes;
-    }
 
-    getOTOClientes():TOClientes {
-        return this.oTOClientes;
-    }
-
-    getNombreRazon():string {
+    /*--------------------------------------------------------------------
+                        Funcionalidad adicional
+    ----------------------------------------------------------------------*/
+    getNombreRazon(oTOClientes:TOClientes):string {
         //console.log('oTOCliente', this.oTOClientes);
-        if ( this.oTOClientes.getTiposPersona_id()!=Globals.TIPO_PERSONA_JURIDICA ) 
-          return this.oTOClientes.getApepat() + ' ' + this.oTOClientes.getApemat() + ', ' + this.oTOClientes.getNombres();
+        if ( oTOClientes.getTiposPersona_id()!=Globals.TIPO_PERSONA_JURIDICA ) 
+          return oTOClientes.getApepat() + ' ' + oTOClientes.getApemat() + ', ' + oTOClientes.getNombres();
         else 
-          return this.oTOClientes.getRazonSocial();
+          return oTOClientes.getRazonSocial();
     }
 
-    getContacto():string {
+    getContacto(oTOClientes:TOClientes):string {
         let contacto = '';
-        if ( this.oTOClientes.getTiposPersona_id() == Globals.TIPO_PERSONA_JURIDICA
-            && this.oTOClientes.getNombres().trim().length
+        if ( oTOClientes.getTiposPersona_id() == Globals.TIPO_PERSONA_JURIDICA
+            && oTOClientes.getNombres().trim().length
         ) {
-            contacto = this.oTOClientes.getApepat() + ' ' + this.oTOClientes.getApemat() + ', ' + this.oTOClientes.getNombres();
-            contacto = contacto + ' (DNI: ' + this.oTOClientes.getNumeroDocIden() + ')';
+            contacto = oTOClientes.getApepat() + ' ' + oTOClientes.getApemat() + ', ' + oTOClientes.getNombres();
+            contacto = contacto + ' (DNI: ' + oTOClientes.getNumeroDocIden() + ')';
         }
         return contacto;
     }
 
-    getTelefonos():string {
+    getTelefonos(oTOClientes:TOClientes):string {
         let telefonos = '';;
-        telefonos = telefonos + this.oTOClientes.getTelefono();
-        if ( telefonos.trim().length && this.oTOClientes.getCelular().trim().length ) 
+        telefonos = telefonos + oTOClientes.getTelefono();
+        if ( telefonos.trim().length && oTOClientes.getCelular().trim().length ) 
             telefonos = telefonos + ' - ';
-        telefonos = telefonos + this.oTOClientes.getCelular();
+        telefonos = telefonos + oTOClientes.getCelular();
         return telefonos;
     }
 
-    getDocIden():string {
+    getDocIden(oTOClientes:TOClientes):string {
         let docIden = '';
-        if (this.oTOClientes.getTiposPersona_id() == Globals.TIPO_PERSONA_JURIDICA)
-            docIden = 'RUC: ' + this.oTOClientes.getNumeroRuc();
+        if (oTOClientes.getTiposPersona_id() == Globals.TIPO_PERSONA_JURIDICA)
+            docIden = 'RUC: ' + oTOClientes.getNumeroRuc();
         else
-            docIden = 'DNI: ' + this.oTOClientes.getNumeroDocIden();
+            docIden = 'DNI: ' + oTOClientes.getNumeroDocIden();
         return docIden;
+    }
+
+    filterByDiaRuta(isRuta:string, diaRuta:string) {
+        let aTOClientes_aux:TOClientes[]=[];
+        for (let i in this.aTOClientes) {
+            if (    (isRuta === Globals.IS_RUTA && this.aTOClientes[i].getDiaRuta() === diaRuta) 
+                ||  (isRuta !== Globals.IS_RUTA && this.aTOClientes[i].getDiaRuta() !== diaRuta)
+            )
+                aTOClientes_aux.push(this.aTOClientes[i]);
+        }
+        this.aTOClientes = aTOClientes_aux;
+    }
+
+    filterBySearch(isRuta:string, diaRuta:string, searchValue:string){
+        this.aTOClientes = this.aTOClientes.filter(cliente=>{
+            let dato = this.getNombreRazon(cliente);
+            if (    (   (isRuta === Globals.IS_RUTA && cliente.getDiaRuta() === diaRuta) 
+                    ||  (isRuta !== Globals.IS_RUTA && cliente.getDiaRuta() !== diaRuta)
+                )
+                &&  dato.toUpperCase().indexOf(searchValue.toUpperCase())>-1
+            ) 
+              return true;
+            else
+              return false;
+          })
     }
 }

@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-04 14:45:03.161523
+// Generate by @vengardus 2019-03-04 19:51:56.117864
 
 export class TOClientes {
 
@@ -17,6 +17,10 @@ export class TOClientes {
    private diaRuta:string;
    private zonaCod:string;
    private estadoAtencion:string;
+   private frecuenciaVisita:string;
+   private limiteCredito:number;
+   private creditoDisponible:number;
+   private email:string;
 
    constructor(item:any) {
       this.id = item.id;
@@ -34,6 +38,10 @@ export class TOClientes {
       this.diaRuta = item.diaRuta;
       this.zonaCod = item.zonaCod;
       this.estadoAtencion = item.estadoAtencion;
+      this.frecuenciaVisita = item.frecuenciaVisita;
+      this.limiteCredito = item.limiteCredito;
+      this.creditoDisponible = item.creditoDisponible;
+      this.email = item.email;
    }
 
    getId():number { return this.id; }
@@ -80,5 +88,17 @@ export class TOClientes {
 
    getEstadoAtencion():string { return this.estadoAtencion; }
    setEstadoAtencion(value:string) { this.estadoAtencion = value; }
+
+   getFrecuenciaVisita():string { return this.frecuenciaVisita; }
+   setFrecuenciaVisita(value:string) { this.frecuenciaVisita = value; }
+
+   getLimiteCredito():number { return this.limiteCredito; }
+   setLimiteCredito(value:number) { this.limiteCredito = value; }
+
+   getCreditoDisponible():number { return this.creditoDisponible; }
+   setCreditoDisponible(value:number) { this.creditoDisponible = value; }
+
+   getEmail():string { return this.email; }
+   setEmail(value:string) { this.email = value; }
 
 }

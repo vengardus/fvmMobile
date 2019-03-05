@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { TOClientes } from "../../models/to/TOclientes";
 import { StorageService } from 'src/app/services/storage.service';
 import { Globals } from 'src/app/config/globals';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, NavParams } from '@ionic/angular';
 import { TOParametros } from '../../models/to/TOparametros';
 import { Clientes } from '../../models/clientes';
+import { TOClientes } from 'src/app/models/to/TOclientes';
 
 @Component({
   selector: 'app-clientes',
@@ -14,14 +14,11 @@ import { Clientes } from '../../models/clientes';
 })
 export class ClientesPage implements OnInit {
 
-  message : string[]=[];
-  aTOClientes:TOClientes[]=[];
-  parametros:TOParametros=null;
-  isRuta='1';
-  searchValue='';
-  lGlobals = { 
-    'TIPO_PERSONA_JURIDICA' : Globals.TIPO_PERSONA_JURIDICA
-  };
+  message : string[] = [];
+  oClientes: Clientes = null;
+  oTOParametros: TOParametros = null;
+  isRuta = Globals.IS_RUTA;
+  searchValue = '';
 
   constructor(
     private storageService:StorageService,
@@ -39,49 +36,45 @@ export class ClientesPage implements OnInit {
     return this.storageService.getCatalog(Globals.CATALOG_PARAMETROS).then(data=>{
       if (data) {
         let oTOPametros:TOParametros = new TOParametros(data);
-        this.parametros = oTOPametros;
-        console.log(oTOPametros);
-        console.log('ed', this.parametros.getDiaRuta());
+        this.oTOParametros = oTOPametros;
       }
     })
   }
 
   loadClientes() {
-    if ( this.isRuta === '1' )
-      this.message.push('Cargando Clientes en Ruta');
+    if ( this.isRuta === Globals.IS_RUTA )
+      this.message.push('Cargando Clientes en Ruta...');
     else
-      this.message.push('Cargando Clientes Fuera de Ruta');
+      this.message.push('Cargando Clientes Fuera de Ruta...');
     return this.storageService.getCatalog(Globals.CATALOG_CLIENTES).then(data=>{
-      if (data) {
-        let oClientes : Clientes = new Clientes();
-        oClientes.addClientes(data);
-        this.aTOClientes = oClientes.getATOClientes();
-      }
+      let oClientes : Clientes = new Clientes(data);
+      oClientes.getAll();
+      oClientes.filterByDiaRuta(this.isRuta, this.oTOParametros.getDiaRuta());
+      this.oClientes = oClientes;
       this.message = [];
+    })
+    .catch(err=>{
+      this.message.push('Ocurrió un error:'+err.message);
     })
   }
 
   searchChanged() {
-    this.loadClientes().then(()=>{
-      this.aTOClientes = this.aTOClientes.filter(cliente=>{
-        console.log(cliente.getNombres(), this.searchValue);
-        let dato: string;
-        if ( cliente.getTiposPersona_id()!=Globals.TIPO_PERSONA_JURIDICA ) 
-          dato = cliente.getApepat() + cliente.getApemat() + cliente.getNombres();
-        else 
-          dato = cliente.getRazonSocial();
-        if ( dato.toUpperCase().indexOf(this.searchValue.toUpperCase())>-1) {
-          console.log('ok');
-          return true;
-        }
-        else
-          return false;
-      })
-    })
+    if (!this.oClientes) {
+      this.loadClientes();
+      return;
+    }
+    this.message.push('Filtrando...');
+    this.oClientes.getAll();
+    this.oClientes.filterBySearch(this.isRuta, 
+                      this.oTOParametros.getDiaRuta(), 
+                      this.searchValue);
+    this.message=[];
   }
 
-  goInfoCliente(cliente) {
-    this.storageService.putCatalog(Globals.CATALOG_TMP_CLIENTES, cliente).then(()=>{
+  goInfoCliente(cliente:TOClientes) {
+    let aTOClientes: TOClientes[] = [];
+    aTOClientes.push(cliente);
+    this.storageService.putCatalog(Globals.CATALOG_TMP_CLIENTES, aTOClientes).then(()=>{
       this.nav.navigateForward(`/clientes-info`);
     })
     .catch(()=>{

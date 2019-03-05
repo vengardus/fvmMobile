@@ -1,23 +1,26 @@
-// Generate by @vengardus 2019-03-04 14:45:03.173518
+// Generate by @vengardus 2019-03-04 19:51:56.129859
 
-import { TOClientes } from './to/TOclientes';
-
+import { TOClientes } from 'src/app/models/to/TOclientes';
 
 export class Clientes{
-    aTOClientes:TOClientes[]=[];
-    oTOClientes:TOClientes;
+    private aTOClientes:TOClientes[]=[];
+    private dataStorage:any=null;
 
-    constructor ( ){}
-
-    add(item:any) {
-        let oTOClientes = new TOClientes(item);
-        this.aTOClientes.push(oTOClientes);
-        this.oTOClientes = oTOClientes;
+    constructor ( dataStorage?:any ) {
+        if ( dataStorage )
+            this.dataStorage = dataStorage;
     }
 
-    addClientes(items:any) {
-        this.setATOClientes([]);
-        for ( let item of items ) 
+    private add(item:any) {
+        let oTOClientes = new TOClientes(item);
+        this.aTOClientes.push(oTOClientes);
+    }
+
+    getAll(dataStorage?:any) {
+        this.aTOClientes = [];  
+        if ( dataStorage )      
+            this.dataStorage = dataStorage
+        for ( let item of this.dataStorage ) 
             this.add(item);
     }
 
@@ -25,15 +28,13 @@ export class Clientes{
         return this.aTOClientes;
     }
 
-    setATOClientes(value) {
+    setATOClientes(value:TOClientes[]) {
         this.aTOClientes = value;
     }
 
-    setOTOClientes(oTOClientes:TOClientes) {
-        this.oTOClientes = oTOClientes;
-    }
 
-    getOTOClientes():TOClientes {
-        return this.oTOClientes;
-    }
+    /*--------------------------------------------------------------------
+                        Funcionalidad adicional
+    ----------------------------------------------------------------------*/
+    
 }

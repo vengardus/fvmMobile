@@ -43,19 +43,15 @@ export class ClientesInfoPage implements OnInit {
 
   ngOnInit() {
     this.storage.getCatalog(Globals.CATALOG_TMP_CLIENTES).then(data=>{
-      console.log('data', data);
-      let cliente = data;
-      this.oClientes = new Clientes();
-      this.oClientes.add(data);
+      this.oClientes = new Clientes(data);
+      this.oClientes.getAll();
+      console.log(this.oClientes);
     })
   }
 
   selectButtonTab(buttonId) {
     this.buttonId_selected = buttonId;
-    console.log('selected', this.buttonId_selected);
     for ( let index in this.buttons) {
-      console.log('index', index);
-      console.log('id', this.buttons[index].id);
       if ( this.buttons[index].id == this.buttonId_selected ) {
         this.buttons[index].color = this.color.primary;
         this.buttons[index].fill = this.fill.solid;

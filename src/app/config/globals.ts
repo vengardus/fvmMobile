@@ -16,7 +16,9 @@ export class Globals {
 	public static CATALOG_TTABLAS = 'ttablas';
 	public static CATALOG_TMP_CLIENTES = 'tmpCliente';
 
-    // CODIGOS DE TABLA
+	public static IS_RUTA = '1';
+
+    // CODIGOS DE TABLA (tTablas)
 	public static CODTABLA_TIPOS_DOCUMENTO = "01";
 	public static CODTABLA_MONEDAS = "02";
 	public static CODTABLA_UNIDADES_MEDIDA = "03";

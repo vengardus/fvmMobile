@@ -1,23 +1,26 @@
-// Generate by @vengardus 2019-03-04 14:45:03.197512
+// Generate by @vengardus 2019-03-04 19:51:56.153847
 
-import { TOParametros } from './to/TOparametros';
-
+import { TOParametros } from 'src/app/models/to/TOparametros';
 
 export class Parametros{
-    aTOParametros:TOParametros[]=[];
-    oTOParametros:TOParametros;
+    private aTOParametros:TOParametros[]=[];
+    private dataStorage:any=null;
 
-    constructor ( ){}
-
-    add(item:any) {
-        let oTOParametros = new TOParametros(item);
-        this.aTOParametros.push(oTOParametros);
-        this.oTOParametros = oTOParametros;
+    constructor ( dataStorage?:any ) {
+        if ( dataStorage )
+            this.dataStorage = dataStorage;
     }
 
-    addParametros(items:any) {
-        this.setATOParametros([]);
-        for ( let item of items ) 
+    private add(item:any) {
+        let oTOParametros = new TOParametros(item);
+        this.aTOParametros.push(oTOParametros);
+    }
+
+    getAll(dataStorage?:any) {
+        this.aTOParametros = [];  
+        if ( dataStorage )      
+            this.dataStorage = dataStorage
+        for ( let item of this.dataStorage ) 
             this.add(item);
     }
 
@@ -25,15 +28,13 @@ export class Parametros{
         return this.aTOParametros;
     }
 
-    setATOParametros(value) {
+    setATOParametros(value:TOParametros[]) {
         this.aTOParametros = value;
     }
 
-    setOTOParametros(oTOParametros:TOParametros) {
-        this.oTOParametros = oTOParametros;
-    }
 
-    getOTOParametros():TOParametros {
-        return this.oTOParametros;
-    }
+    /*--------------------------------------------------------------------
+                        Funcionalidad adicional
+    ----------------------------------------------------------------------*/
+    
 }

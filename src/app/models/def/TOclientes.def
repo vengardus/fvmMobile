@@ -13,3 +13,7 @@
     diaRuta:string
     zonaCod:string
     estadoAtencion:string
+	frecuenciaVisita:string
+	limiteCredito:number
+	creditoDisponible:number
+	email:string

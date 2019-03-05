@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Globals } from "../config/globals";
-import { TOClientes } from '../models/to/TOclientes';
-import { Clientes } from "../models/clientes";
 import { TOParametros } from '../models/to/TOparametros';
 import { Catalogos } from '../models/catalogos';
 import { TOCatalogos } from '../models/to/TOcatalogos';
@@ -67,8 +65,8 @@ export class StorageService {
       if ( ! data )  
         return isCatalogosCargados;
 
-      let oCatalogos = new Catalogos();
-      oCatalogos.addCatalogos(data);
+      let oCatalogos = new Catalogos(data);
+      oCatalogos.getAll();
       let aTOCatalogos:TOCatalogos[] = oCatalogos.getATOCatalogos();
       for ( let index in aTOCatalogos) {
         if ( aTOCatalogos[index].getObligatorio() ) {
@@ -83,36 +81,10 @@ export class StorageService {
           console.log(aTOCatalogos[index].getNombre(), isCatalogosCargados);
         }
       }
-    /*
-      let catalogos = data;
-      for ( let index in catalogos) {
-        if ( catalogos[index]['obligatorio'] ) {
-          if (  catalogos[index]['recv'] == 2
-              && catalogos[index]['saved'] == 1
-           )
-            isCatalogosCargados = true;
-          else  {
-            isCatalogosCargados = false;
-            break;
-          }
-          console.log(catalogos[index]['nombre'], isCatalogosCargados);
-        }
-      }
-    */
+    
       return isCatalogosCargados;
     })
   }
-//-----------------------------------------------------
-/*  
-getClientes():Promise<TOClientes[]> {
-    return this.getCatalog(Globals.CATALOG_CLIENTES).then(data=>{
-      let clientes = data;
-      let oClientes = new Clientes();
-      oClientes.addClientes(clientes);
-      return oClientes.getATOClientes();
-    })
-  }
-*/
 //-----------------------------------------------------
 
 }
