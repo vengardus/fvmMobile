@@ -1,7 +1,9 @@
-import { TO<myClass> } from 'src/app/models/to/TO<myclass>';
+// Generate by @vengardus 2019-03-08 16:52:45.173502
 
-export class <myClass>{
-    private aTO<myClass>:TO<myClass>[]=[];
+import { TOArticulosItems } from 'src/app/models/to/TOarticulosItems';
+
+export class ArticulosItems{
+    private aTOArticulosItems:TOArticulosItems[]=[];
     private dataStorage:any=null;
 
     constructor ( dataStorage?:any ) {
@@ -10,24 +12,24 @@ export class <myClass>{
     }
 
     private add(itemDataStorage:any) {
-        let oTO<myClass> = new TO<myClass>(itemDataStorage);
-        this.aTO<myClass>.push(oTO<myClass>);
+        let oTOArticulosItems = new TOArticulosItems(itemDataStorage);
+        this.aTOArticulosItems.push(oTOArticulosItems);
     }
 
     getAll(dataStorage?:any) {
-        this.aTO<myClass> = [];  
+        this.aTOArticulosItems = [];  
         if ( dataStorage )      
             this.dataStorage = dataStorage
         for ( let item of this.dataStorage ) 
             this.add(item);
     }
 
-    getATO<myClass>():TO<myClass>[] {
-        return this.aTO<myClass>;
+    getATOArticulosItems():TOArticulosItems[] {
+        return this.aTOArticulosItems;
     }
 
-    setATO<myClass>(value:TO<myClass>[]) {
-        this.aTO<myClass> = value;
+    setATOArticulosItems(value:TOArticulosItems[]) {
+        this.aTOArticulosItems = value;
     }
 
 

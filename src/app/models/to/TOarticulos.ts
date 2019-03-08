@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-02 17:42:58.815481
+// Generate by @vengardus 2019-03-08 16:52:21.663953
 
 export class TOArticulos {
 
@@ -9,31 +9,31 @@ export class TOArticulos {
    private descuento:number;
    private tiposDescuento_id:string;
 
-   public constructor(item:any) {
-      this.id = item.id;
-      this.codigo = item.codigo;
-      this.descripcion = item.descripcion;
-      this.precioUnitario = item.precioUnitario;
-      this.descuento = item.descuento;
-      this.tiposDescuento_id = item.tiposDescuento_id;
+   constructor(itemDataStorage:any) {
+      this.id = itemDataStorage.id;
+      this.codigo = itemDataStorage.codigo;
+      this.descripcion = itemDataStorage.descripcion;
+      this.precioUnitario = itemDataStorage.precioUnitario;
+      this.descuento = itemDataStorage.descuento;
+      this.tiposDescuento_id = itemDataStorage.tiposDescuento_id;
    }
 
-   public getId() { return this.id; }
-   public setId(value) { this.id = value; }
+   getId():number { return this.id; }
+   setId(value:number) { this.id = value; }
 
-   public getCodigo() { return this.codigo; }
-   public setCodigo(value) { this.codigo = value; }
+   getCodigo():string { return this.codigo; }
+   setCodigo(value:string) { this.codigo = value; }
 
-   public getDescripcion() { return this.descripcion; }
-   public setDescripcion(value) { this.descripcion = value; }
+   getDescripcion():string { return this.descripcion; }
+   setDescripcion(value:string) { this.descripcion = value; }
 
-   public getPreciounitario() { return this.precioUnitario; }
-   public setPreciounitario(value) { this.precioUnitario = value; }
+   getPrecioUnitario():number { return this.precioUnitario; }
+   setPrecioUnitario(value:number) { this.precioUnitario = value; }
 
-   public getDescuento() { return this.descuento; }
-   public setDescuento(value) { this.descuento = value; }
+   getDescuento():number { return this.descuento; }
+   setDescuento(value:number) { this.descuento = value; }
 
-   public getTiposdescuento_id() { return this.tiposDescuento_id; }
-   public setTiposdescuento_id(value) { this.tiposDescuento_id = value; }
+   getTiposDescuento_id():string { return this.tiposDescuento_id; }
+   setTiposDescuento_id(value:string) { this.tiposDescuento_id = value; }
 
 }

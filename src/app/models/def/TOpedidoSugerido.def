@@ -1,0 +1,3 @@
+cliente_id : number
+articulo_id : number
+cantidad : number

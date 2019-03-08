@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-02 23:43:33.097757
+// Generate by @vengardus 2019-03-08 16:52:52.008530
 
 export class TOCatalogos {
 
@@ -11,15 +11,15 @@ export class TOCatalogos {
    private recv:number;
    private saved:number;
 
-   constructor(item:any) {
-      this.id = item.id;
-      this.nombre = item.nombre;
-      this.descripcion = item.descripcion;
-      this.obligatorio = item.obligatorio;
-      this.update = item.update;
-      this.send = item.send;
-      this.recv = item.recv;
-      this.saved = item.saved;
+   constructor(itemDataStorage:any) {
+      this.id = itemDataStorage.id;
+      this.nombre = itemDataStorage.nombre;
+      this.descripcion = itemDataStorage.descripcion;
+      this.obligatorio = itemDataStorage.obligatorio;
+      this.update = itemDataStorage.update;
+      this.send = itemDataStorage.send;
+      this.recv = itemDataStorage.recv;
+      this.saved = itemDataStorage.saved;
    }
 
    getId():string { return this.id; }

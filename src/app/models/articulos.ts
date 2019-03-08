@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-04 19:51:55.944757
+// Generate by @vengardus 2019-03-08 16:52:36.159079
 
 import { TOArticulos } from 'src/app/models/to/TOarticulos';
 
@@ -11,8 +11,8 @@ export class Articulos{
             this.dataStorage = dataStorage;
     }
 
-    private add(item:any) {
-        let oTOArticulos = new TOArticulos(item);
+    private add(itemDataStorage:any) {
+        let oTOArticulos = new TOArticulos(itemDataStorage);
         this.aTOArticulos.push(oTOArticulos);
     }
 

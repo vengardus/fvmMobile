@@ -1,9 +1,9 @@
-// Generate by @vengardus 2019-03-04 19:51:56.129859
+// Generate by @vengardus 2019-03-08 16:53:08.810902
 
-import { TOClientes } from 'src/app/models/to/TOclientes';
+import { TOParametros } from 'src/app/models/to/TOparametros';
 
-export class Clientes{
-    private aTOClientes:TOClientes[]=[];
+export class Parametros{
+    private aTOParametros:TOParametros[]=[];
     private dataStorage:any=null;
 
     constructor ( dataStorage?:any ) {
@@ -11,25 +11,25 @@ export class Clientes{
             this.dataStorage = dataStorage;
     }
 
-    private add(item:any) {
-        let oTOClientes = new TOClientes(item);
-        this.aTOClientes.push(oTOClientes);
+    private add(itemDataStorage:any) {
+        let oTOParametros = new TOParametros(itemDataStorage);
+        this.aTOParametros.push(oTOParametros);
     }
 
     getAll(dataStorage?:any) {
-        this.aTOClientes = [];  
+        this.aTOParametros = [];  
         if ( dataStorage )      
             this.dataStorage = dataStorage
         for ( let item of this.dataStorage ) 
             this.add(item);
     }
 
-    getATOClientes():TOClientes[] {
-        return this.aTOClientes;
+    getATOParametros():TOParametros[] {
+        return this.aTOParametros;
     }
 
-    setATOClientes(value:TOClientes[]) {
-        this.aTOClientes = value;
+    setATOParametros(value:TOParametros[]) {
+        this.aTOParametros = value;
     }
 
 

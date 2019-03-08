@@ -1,7 +1,9 @@
-import { TO<myClass> } from 'src/app/models/to/TO<myclass>';
+// Generate by @vengardus 2019-03-08 16:53:08.831901
 
-export class <myClass>{
-    private aTO<myClass>:TO<myClass>[]=[];
+import { TOPedidoSugerido } from 'src/app/models/to/TOpedidoSugerido';
+
+export class PedidoSugerido{
+    private aTOPedidoSugerido:TOPedidoSugerido[]=[];
     private dataStorage:any=null;
 
     constructor ( dataStorage?:any ) {
@@ -10,24 +12,24 @@ export class <myClass>{
     }
 
     private add(itemDataStorage:any) {
-        let oTO<myClass> = new TO<myClass>(itemDataStorage);
-        this.aTO<myClass>.push(oTO<myClass>);
+        let oTOPedidoSugerido = new TOPedidoSugerido(itemDataStorage);
+        this.aTOPedidoSugerido.push(oTOPedidoSugerido);
     }
 
     getAll(dataStorage?:any) {
-        this.aTO<myClass> = [];  
+        this.aTOPedidoSugerido = [];  
         if ( dataStorage )      
             this.dataStorage = dataStorage
         for ( let item of this.dataStorage ) 
             this.add(item);
     }
 
-    getATO<myClass>():TO<myClass>[] {
-        return this.aTO<myClass>;
+    getATOPedidoSugerido():TOPedidoSugerido[] {
+        return this.aTOPedidoSugerido;
     }
 
-    setATO<myClass>(value:TO<myClass>[]) {
-        this.aTO<myClass> = value;
+    setATOPedidoSugerido(value:TOPedidoSugerido[]) {
+        this.aTOPedidoSugerido = value;
     }
 
 

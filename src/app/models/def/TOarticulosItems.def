@@ -1,0 +1,4 @@
+[extends]:TOArticulos
+cantidad:number
+isSelected : boolean
+isSugerido : boolean

@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-04 19:26:38.447092
+// Generate by @vengardus 2019-03-08 16:52:57.270686
 
 export class TOClientes {
 
@@ -22,26 +22,26 @@ export class TOClientes {
    private creditoDisponible:number;
    private email:string;
 
-   constructor(item:any) {
-      this.id = item.id;
-      this.tiposPersona_id = item.tiposPersona_id;
-      this.apepat = item.apepat;
-      this.apemat = item.apemat;
-      this.nombres = item.nombres;
-      this.razonSocial = item.razonSocial;
-      this.tiposDocIden_id = item.tiposDocIden_id;
-      this.numeroDocIden = item.numeroDocIden;
-      this.numeroRuc = item.numeroRuc;
-      this.telefono = item.telefono;
-      this.celular = item.celular;
-      this.direccion = item.direccion;
-      this.diaRuta = item.diaRuta;
-      this.zonaCod = item.zonaCod;
-      this.estadoAtencion = item.estadoAtencion;
-      this.frecuenciaVisita = item.frecuenciaVisita;
-      this.limiteCredito = item.limiteCredito;
-      this.creditoDisponible = item.creditoDisponible;
-      this.email = item.email;
+   constructor(itemDataStorage:any) {
+      this.id = itemDataStorage.id;
+      this.tiposPersona_id = itemDataStorage.tiposPersona_id;
+      this.apepat = itemDataStorage.apepat;
+      this.apemat = itemDataStorage.apemat;
+      this.nombres = itemDataStorage.nombres;
+      this.razonSocial = itemDataStorage.razonSocial;
+      this.tiposDocIden_id = itemDataStorage.tiposDocIden_id;
+      this.numeroDocIden = itemDataStorage.numeroDocIden;
+      this.numeroRuc = itemDataStorage.numeroRuc;
+      this.telefono = itemDataStorage.telefono;
+      this.celular = itemDataStorage.celular;
+      this.direccion = itemDataStorage.direccion;
+      this.diaRuta = itemDataStorage.diaRuta;
+      this.zonaCod = itemDataStorage.zonaCod;
+      this.estadoAtencion = itemDataStorage.estadoAtencion;
+      this.frecuenciaVisita = itemDataStorage.frecuenciaVisita;
+      this.limiteCredito = itemDataStorage.limiteCredito;
+      this.creditoDisponible = itemDataStorage.creditoDisponible;
+      this.email = itemDataStorage.email;
    }
 
    getId():number { return this.id; }
