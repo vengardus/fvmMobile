@@ -4,3 +4,8 @@ descripcion:string
 precioUnitario:number
 descuento:number
 tiposDescuento_id:string
+tiposAfectacion_id:string
+unidadesMedida_id:string
+monedas_id:string
+marcas_id:number
+familias_id:number

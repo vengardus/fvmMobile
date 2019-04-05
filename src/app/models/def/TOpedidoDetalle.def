@@ -1,0 +1,16 @@
+pedido_id:number
+articulos_id:number
+cantidad:number
+precioUnitario:number
+unidadesMedida_id:string
+monedas_id:string
+tiposAfectacion_id:string
+descuento:number
+igv:number
+isc:number
+subTotal:number
+item:number
+tipoCambio:number
+
+
+

@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-08 16:53:08.810902
+// Generate by @vengardus 2019-03-27 15:03:50.342827
 
 import { TOParametros } from 'src/app/models/to/TOparametros';
 
@@ -7,8 +7,10 @@ export class Parametros{
     private dataStorage:any=null;
 
     constructor ( dataStorage?:any ) {
-        if ( dataStorage )
+        if ( dataStorage ) {
             this.dataStorage = dataStorage;
+            this.getAll();
+        }
     }
 
     private add(itemDataStorage:any) {
@@ -32,9 +34,34 @@ export class Parametros{
         this.aTOParametros = value;
     }
 
+    insert(oTOParametros:TOParametros) {
+        this.aTOParametros.push(oTOParametros);
+    }
+
+    
+
+
 
     /*--------------------------------------------------------------------
                         Funcionalidad adicional
     ----------------------------------------------------------------------*/
-    
+    remove(id:number):boolean {
+        let index = this.aTOParametros.findIndex(oTOParametros => {
+            return (true) ;
+        })
+        if ( index == -1 )
+            return false;
+        this.aTOParametros.splice(index, 1);
+        return true;
+    }
+
+    update(oTOParametros:TOParametros):boolean {
+        let index = this.aTOParametros.findIndex(item => {
+            return (true) ;
+        })
+        if ( index == -1 )
+            return false;
+        this.aTOParametros.splice(index, 1, oTOParametros);
+        return true;
+    }
 }

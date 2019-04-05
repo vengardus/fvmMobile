@@ -1,19 +1,21 @@
-// Generate by @vengardus 2019-03-04 19:51:56.129859
+// Generate by @vengardus 2019-03-27 20:26:00.632661
 
 import { TOClientes } from 'src/app/models/to/TOclientes';
-import { Globals } from 'src/app/config/globals';
+import { Globals } from '../config/globals';
 
 export class Clientes{
     private aTOClientes:TOClientes[]=[];
     private dataStorage:any=null;
 
     constructor ( dataStorage?:any ) {
-        if ( dataStorage )
+        if ( dataStorage ) {
             this.dataStorage = dataStorage;
+            this.getAll();
+        }
     }
 
-    private add(item:any) {
-        let oTOClientes = new TOClientes(item);
+    private addFromArray(itemDataStorage:any) {
+        let oTOClientes = new TOClientes(itemDataStorage);
         this.aTOClientes.push(oTOClientes);
     }
 
@@ -22,7 +24,7 @@ export class Clientes{
         if ( dataStorage )      
             this.dataStorage = dataStorage
         for ( let item of this.dataStorage ) 
-            this.add(item);
+            this.addFromArray(item);
     }
 
     getATOClientes():TOClientes[] {
@@ -32,6 +34,31 @@ export class Clientes{
     setATOClientes(value:TOClientes[]) {
         this.aTOClientes = value;
     }
+
+    add(oTOClientes:TOClientes) {
+        this.aTOClientes.push(oTOClientes);
+    }
+
+    remove(id:number):boolean {
+        let index = this.aTOClientes.findIndex(oTOClientes => {
+            return (oTOClientes.getId() === id ) ;
+        })
+        if ( index == -1 )
+            return false;
+        this.aTOClientes.splice(index, 1);
+        return true;
+    }
+
+    update(oTOClientes:TOClientes):boolean {
+        let index = this.aTOClientes.findIndex(item => {
+            return (oTOClientes.getId() === item.getId() ) ;
+        })
+        if ( index == -1 )
+            return false;
+        this.aTOClientes.splice(index, 1, oTOClientes);
+        return true;
+    }
+
 
 
     /*--------------------------------------------------------------------
@@ -68,10 +95,19 @@ export class Clientes{
     getDocIden(oTOClientes:TOClientes):string {
         let docIden = '';
         if (oTOClientes.getTiposPersona_id() == Globals.TIPO_PERSONA_JURIDICA)
-            docIden = 'RUC: ' + oTOClientes.getNumeroRuc();
+            docIden = oTOClientes.getNumeroRuc();
         else
-            docIden = 'DNI: ' + oTOClientes.getNumeroDocIden();
+            docIden = oTOClientes.getNumeroDocIden();
         return docIden;
+    }
+
+    getTipoDocIden_id(oTOClientes:TOClientes):string {
+        let tipoDocIden = '';
+        if (oTOClientes.getTiposPersona_id() == Globals.TIPO_PERSONA_JURIDICA)
+            tipoDocIden = Globals.TIPO_RUC;
+        else
+            tipoDocIden = Globals.TIPO_DNI;
+        return tipoDocIden;
     }
 
     filterByDiaRuta(isRuta:string, diaRuta:string) {
@@ -97,6 +133,18 @@ export class Clientes{
             else
               return false;
           })
+    }
+
+    getLimiteCredito(oTOClientes:TOClientes):string {
+        return oTOClientes.getLimiteCredito().toFixed(2);
+    }
+
+    getCreditoDisponible(oTOClientes:TOClientes):string {
+        return oTOClientes.getCreditoDisponible().toFixed(2);
+    }
+
+    getDeudaPendiente(oTOClientes:TOClientes):string {
+        return (oTOClientes.getLimiteCredito()-oTOClientes.getCreditoDisponible()).toFixed(2);
     }
 
 }

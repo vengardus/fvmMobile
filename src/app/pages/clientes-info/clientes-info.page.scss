@@ -1,0 +1,42 @@
+@media (max-width: 575px) {
+    .hide-xs {
+      display: none;
+    }
+}
+ 
+@media (min-width: 576px) and (max-width: 767px) {
+    .hide-sm {
+      display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .hide-md {
+      display: none;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .hide-xl {
+      display: none;
+    }
+}
+
+.tituloSeccion {
+  font-weight: bold;
+  font-size: 1.2rem;
+  background-color: lightgrey;
+}
+.textCenter {
+  align-content: center;
+  text-align: center;
+}
+.glosa {
+  font-size: 0.7rem;
+}
+.valorResaltado {
+  font-weight: bold;
+}
+.textPadding {
+  padding-left: 1rem;
+}

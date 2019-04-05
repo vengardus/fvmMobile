@@ -5,11 +5,13 @@ export class <myClass>{
     private dataStorage:any=null;
 
     constructor ( dataStorage?:any ) {
-        if ( dataStorage )
+        if ( dataStorage ) {
             this.dataStorage = dataStorage;
+            this.getAll();
+        }
     }
 
-    private add(itemDataStorage:any) {
+    private addFromArray(itemDataStorage:any) {
         let oTO<myClass> = new TO<myClass>(itemDataStorage);
         this.aTO<myClass>.push(oTO<myClass>);
     }
@@ -19,7 +21,7 @@ export class <myClass>{
         if ( dataStorage )      
             this.dataStorage = dataStorage
         for ( let item of this.dataStorage ) 
-            this.add(item);
+            this.addFromArray(item);
     }
 
     getATO<myClass>():TO<myClass>[] {
@@ -29,6 +31,31 @@ export class <myClass>{
     setATO<myClass>(value:TO<myClass>[]) {
         this.aTO<myClass> = value;
     }
+
+    add(oTO<myClass>:TO<myClass>) {
+        this.aTO<myClass>.push(oTO<myClass>);
+    }
+
+    remove(id:number):boolean {
+        let index = this.aTO<myClass>.findIndex(oTO<myClass> => {
+            return (oTO<myClass>.getId() === id ) ;
+        })
+        if ( index == -1 )
+            return false;
+        this.aTO<myClass>.splice(index, 1);
+        return true;
+    }
+
+    update(oTO<myClass>:TO<myClass>):boolean {
+        let index = this.aTO<myClass>.findIndex(item => {
+            return (oTO<myClass>.getId() === item.getId() ) ;
+        })
+        if ( index == -1 )
+            return false;
+        this.aTO<myClass>.splice(index, 1, oTO<myClass>);
+        return true;
+    }
+
 
 
     /*--------------------------------------------------------------------

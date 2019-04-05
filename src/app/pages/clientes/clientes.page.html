@@ -1,16 +1,13 @@
 <ion-header>
   <ion-toolbar color='primary'>
-    <ion-buttons slot="start">
-      <ion-back-button defaulHref="/"></ion-back-button>
-    </ion-buttons>
     <ion-title *ngIf="isRuta=='1'; else titleNoRuta">Clienes En Ruta</ion-title>
-    <ng-template #titleNoRuta>
-      <ion-title>Clientes Fuera de Ruta</ion-title>
-    </ng-template>
+      <ng-template #titleNoRuta>
+        <ion-title>Clientes Fuera de Ruta</ion-title>
+      </ng-template>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
   <ion-searchbar [(ngModel)]='searchValue' (ionChange)='searchChanged($event)' showCancelButton='true' debounce="500"></ion-searchbar>
 
@@ -24,7 +21,7 @@
 
   <ion-list  *ngIf='oClientes; else showNoData'>
   <ion-item lines='none' *ngFor="let cliente of (oClientes.getATOClientes())" button (click)="goInfoCliente(cliente)">
-    <ion-label>
+    <ion-label text-wrap>
         <h2>{{oClientes.getNombreRazon(cliente)}}</h2>
         <h3>{{cliente.getDireccion()}}</h3>
     </ion-label>
@@ -32,9 +29,20 @@
     <ion-icon slot='end' *ngIf="cliente.getEstadoAtencion()!='A'" name='checkmark-circle-outline' color='danger'></ion-icon>
   </ion-item>
   </ion-list>
+</ion-content>
 
-  <ng-template #ShowNoData>
+<ion-footer>
+    <ion-toolbar color='primary'>
+      <ng-container *ngTemplateOutlet='opciones'></ng-container>
+    </ion-toolbar>
+</ion-footer>
+
+<ng-template #ShowNoData>
     <ion-item>No se encontraron clientes.</ion-item>
-  </ng-template>
-  
-  </ion-content>
+</ng-template>
+
+<ng-template #opciones>
+      <ion-button (click)="actionCancelar()" slot='start'>
+        <ion-icon slot='start' name="arrow-round-back"></ion-icon>
+      </ion-button>
+</ng-template>

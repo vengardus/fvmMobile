@@ -1,53 +1,122 @@
 <ion-header>
   <ion-toolbar color='primary'>
-    <ion-buttons slot="start">
-      <ion-back-button defaulHref="/"></ion-back-button>
-    </ion-buttons>
     <ion-title>Información Cliente</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
 
-  <ion-item >
-    <ion-button [fill]=buttons[0].fill size='default'  [color]=buttons[0].color (click)="selectButtonTab(0)">General</ion-button>
-    <ion-button [fill]=buttons[1].fill size='default'   [color]=buttons[1].color (click)="selectButtonTab(1)">Financiera</ion-button>
-    <ion-button [fill]=buttons[2].fill size='default'  [color]=buttons[2].color (click)="selectButtonTab(2)">Histórica</ion-button>
+
+<ion-content >
+
+  <ion-item *ngIf='oTabsTipoInfo' class='hide-md hide-xl'>
+    <ion-button [fill]=oTabsTipoInfo.getTabButtons()[0].fill size='default'  [color]=oTabsTipoInfo.getTabButtons()[0].color (click)="selectButtonTabTipoInfo(0)">{{oTabsTipoInfo.getTabButtons()[0].value}}</ion-button>
+    <ion-button [fill]=oTabsTipoInfo.getTabButtons()[1].fill size='default'   [color]=oTabsTipoInfo.getTabButtons()[1].color (click)="selectButtonTabTipoInfo(1)">{{oTabsTipoInfo.getTabButtons()[1].value}}</ion-button>
   </ion-item>
 
-  <ion-card *ngIf="oClientes!=null && buttonId_selected==0">
-    <ion-item lines='none'>
-      <b>{{oClientes.getNombreRazon(oClientes.getATOClientes()[0])}}</b>
-    </ion-item>
-    <ion-item lines='none'>
-      <b>{{oClientes.getATOClientes()[0].getDireccion()}}</b>
-    </ion-item>      
-    <ion-item lines='none' *ngIf="oClientes.getContacto(oClientes.getATOClientes()[0]).length">
-      Contacto: {{oClientes.getContacto(oClientes.getATOClientes()[0])}}
-    </ion-item>
-    <ion-item lines='none'>
-      {{oClientes.getDocIden(oClientes.getATOClientes()[0])}}
-    </ion-item>
-    <ion-item>
-      Dia Ruta: {{oClientes.getATOClientes()[0].getDiaRuta()}}
-      Frecuencia: {{oClientes.getATOClientes()[0].getFrecuenciaVisita()}} 
-    </ion-item>
-    <ion-item lines='none'>
-      <ion-icon slot='start' name='at'></ion-icon>
-      <ion-label>{{oClientes.getATOClientes()[0].getEmail()}}</ion-label>
-    </ion-item>
-    <ion-item lines='none'>
-    <ion-icon slot='start' name='call'></ion-icon>
-      <ion-label>{{oClientes.getTelefonos(oClientes.getATOClientes()[0])}}</ion-label>
-    </ion-item>
-  </ion-card>
+  <div *ngIf='oTOClientes!=null && oTabsTipoInfo.getTabSelected_id()==0; then infoGeneral'>
+  </div>
+  <div *ngIf='oTOClientes!=null && oTabsTipoInfo.getTabSelected_id()==1; then infoFinanciera'>
+  </div>
+  <div *ngIf='oTOClientes!=null && (infoDevice.size!="xs" && infoDevice.size!="sm") ; then infoFinanciera'>
+  </div>
 
-  <ion-card *ngIf="oClientes!=null && buttonId_selected==1">
-    Acá irán los datos financieros
-  </ion-card>
+  <ng-template #infoGeneral>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md='10' offset-md='1'>
+          <ion-row>
+            <ion-col class='tituloSeccion '>Información General</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label text-wrap>
+                <div class='glosa'>Nombre</div>
+                <div class='valorResaltado'>{{oClientes.getNombreRazon(oTOClientes)}}</div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label text-wrap>
+                <div class='glosa'>Dirección</div>
+                <div class='valor'>{{oTOClientes.getDireccion()}}</div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="oClientes.getContacto(oTOClientes).length">
+            <ion-col>    
+              <ion-label text-wrap>
+                <div class='glosa'>Contacto</div>
+                <div class='valor'>{{oClientes.getContacto(oTOClientes)}}</div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label text-wrap>
+                <div class='valor'>{{oClientes.getTipoDocIden_id(oTOClientes)}} : {{oClientes.getDocIden(oTOClientes)}}</div>
+              </ion-label> 
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              Dia Ruta: {{oTOClientes.getDiaRuta()}}
+              <span class='textPadding'>Frecuencia: {{oTOClientes.getFrecuenciaVisita()}} </span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span><ion-icon slot='start' name='mail'></ion-icon></span>
+              <ion-label class='textPadding'>{{oTOClientes.getEmail()}}</ion-label>
+            </ion-col>
+          </ion-row>    
+          <ion-row>
+            <ion-col>
+              <span><ion-icon slot='start' name='call'></ion-icon></span>
+              <ion-label class='textPadding'>{{oClientes.getTelefonos(oTOClientes)}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
 
-  <ion-card *ngIf="oClientes!=null && buttonId_selected==2">
-      Acá irán los datos históricos
-  </ion-card>
-
+  <ng-template #infoFinanciera>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md='10' offset-md='1'>
+          <ion-row>
+            <ion-col class='tituloSeccion '>Información Financiera</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>Límite de crédito</ion-col>
+            <ion-col>{{oClientes.getLimiteCredito(oTOClientes)}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>Deuda pendiente</ion-col>
+            <ion-col>{{oClientes.getDeudaPendiente(oTOClientes)}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>Crédito disponible</ion-col>
+            <ion-col>{{oClientes.getCreditoDisponible(oTOClientes)}}</ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+  
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color='primary'>
+      <ion-button (click)="actionCancelar()">
+        <ion-icon slot='start' name="arrow-round-back"></ion-icon>
+      </ion-button>
+      <ion-button slot='end' expand="full" (click)="actionCobranzas()">
+        Cobranzas
+      </ion-button>
+      <ion-button slot='end' expand="full" (click)="actionPedidos()">
+        Pedidos
+      </ion-button>
+  </ion-toolbar>
+</ion-footer>

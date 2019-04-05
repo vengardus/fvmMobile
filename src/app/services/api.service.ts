@@ -3,6 +3,9 @@ import { HttpClient } from "@angular/common/http";
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
+import { Globals } from '../config/globals';
+import { TOConfig } from '../models/to/TOconfig';
+import { jsonpCallbackContext } from '@angular/common/http/src/module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,12 +17,27 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ApiService {
-  url = 'http://127.0.0.1/demopvta/api/';
-  //url = 'https://ismytv.webcindario.com/api/'
+  url = Globals.HOSTING_SERVER;
   apiKey = '1d957976';
+  message = '';
 
   constructor(
     private http: HttpClient    ) { }
+
+  setIpServer(oTOConfig:TOConfig) {
+    if ( oTOConfig == null ) {
+      if ( Globals.MODO_SERVER == Globals.MODO_HOSTING )
+        this.url = Globals.HOSTING_SERVER;
+      else
+        this.url = Globals.LOCAL_SERVER;
+    }
+    else {
+      if ( oTOConfig.getIsHostingServer() )
+        this.url = (oTOConfig.getIpServer_edit().trim().length>0)? oTOConfig.getIpServer_edit() : Globals.HOSTING_SERVER;
+      else
+        this.url = (oTOConfig.getIpServer_edit().trim().length>0)? oTOConfig.getIpServer_edit() : Globals.LOCAL_SERVER;
+    }
+  }
 
   getCatalog(catalog: string) {
     let urlFull = `${this.url}?cat=${encodeURI(catalog)}&apikey=${this.apiKey}`;
@@ -63,9 +81,20 @@ export class ApiService {
     return this.http.post(urlFull, postData );
   }
 
-  getConfig() {
-    return this.getCatalog('art');
+  async sendPedido(pedido):Promise<any> {
+    let urlFull = this.url + 'p/pedidos.php';
+    console.log(urlFull);
+    let postData = new FormData();
+    postData.append('pedido' , JSON.stringify(pedido));
+    console.log(postData);
+    try {
+      let res = await this.http.post(urlFull, postData).toPromise();
+      return res;
+    }
+    catch (err) {
+      this.message = `Ocurrió un error: ${err.message}`;
+      return null;
+    }
   }
-
 }
 

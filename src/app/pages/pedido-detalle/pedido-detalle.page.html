@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-searchbar color='primary' [(ngModel)]='searchValue'  (ionChange)='actionSearch($event)' showCancelButton='true' debounce="500"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+    {{oTabsOpciones.getTabSelected_id()}}
+  <div *ngIf='oTabsOpciones.getTabSelected_id()!=1 && oTabsOpciones.getTabSelected_id()!=2; then OpcionAddItems'></div>
+  <div *ngIf='oTabsOpciones.getTabSelected_id()==1; then OpcionResumen'></div>
+
+</ion-content>
+
+<ion-footer >
+  <ion-toolbar color='primary'>
+    <ng-container *ngTemplateOutlet='Opciones'></ng-container>
+  </ion-toolbar>
+</ion-footer>
+
+<ng-template #OpcionAddItems>
+
+    <ion-item>
+      <ion-button [fill]=oTabsArticulos.getTabButtons()[0].fill size='default'  [color]=oTabsArticulos.getTabButtons()[0].color (click)="actionSelectButtonTabArticulos(0)"><span class='fontSize-xs'>{{oTabsArticulos.getTabButtons()[0].value}}</span></ion-button>
+      <ion-button [fill]=oTabsArticulos.getTabButtons()[1].fill size='default'   [color]=oTabsArticulos.getTabButtons()[1].color (click)="actionSelectButtonTabArticulos(1)"><span class='fontSize-xs'> {{oTabsArticulos.getTabButtons()[1].value}}</span></ion-button>
+      <ion-button [fill]=oTabsArticulos.getTabButtons()[2].fill size='default'   [color]=oTabsArticulos.getTabButtons()[2].color (click)="actionSelectButtonTabArticulos(2)"><span class='fontSize-xs'>{{oTabsArticulos.getTabButtons()[2].value}}</span></ion-button>
+    </ion-item>
+    
+
+    <ion-grid *ngIf='oArticulosItems; else showNoData'>
+        <ion-row *ngIf='messages.length'>
+          <ion-col>
+            <ion-list>
+              <ion-item *ngFor="let item of messages">
+                <ion-label text-wrap>
+                  {{item}}
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let articuloItem of (aTOArticulosItemsFiltered)" >
+          <ion-col>
+            <ion-row class='row-bordered'>
+              <ion-col size="12" size-md>
+                <ion-row >
+                  <ion-col>
+                    <ion-label class='descripcion' text-wrap>
+                      <div>{{articuloItem.getDescripcion()}}</div>
+                      <span>Código: {{articuloItem.getCodigo()}} </span>
+                      <span class='precio'>S/. {{oArticulosItems.getPrecioUnitario(articuloItem)}}</span>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>    
+              </ion-col> 
+              <ion-col size="12" size-md>
+                <ion-row>               
+                  <ion-col size='4' style='text-align: center'>
+                    <ion-input *ngIf='!articuloItem.getIsSelected()' readonly class='cantidad' type="number" [value]="articuloItem.getCantidad()"></ion-input>  
+                    <ion-input *ngIf='articuloItem.getIsSelected()' readonly class='cantidadSelected' type="number" [value]="articuloItem.getCantidad()"></ion-input>  
+                  </ion-col>
+                  <ion-col size='2' style='text-align: right'>
+                    <ion-button class='buttonRestaCantidad'  color='Light' (click)='actionUpdateCantidad(false, articuloItem)'>
+                      <ion-icon  name='remove-circle-outline' color='dark'></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size='2' style='text-align: left'>
+                    <ion-button  class='buttonSumaCantidad'  color='Medium' (click)='actionUpdateCantidad(true, articuloItem)'>
+                      <ion-icon  name='add-circle-outline' color='dark' ></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size='2' style='text-align: right;'>
+                    <ion-button   class='buttonAgregar' color='Medium' (click)='actionAddCarrito(articuloItem)'>
+                      <ion-icon  name='cart' ></ion-icon>          
+                    </ion-button>
+                  </ion-col>
+                  <ion-col *ngIf='articuloItem.getIsSelected()' size='2' style='text-align: left'>
+                    <ion-button   class='buttonAgregar' color='danger' (click)='actionDeleteCarrito(articuloItem)'>
+                      <ion-icon  name='trash' ></ion-icon>          
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+</ng-template>
+
+  <ng-template #OpcionResumen>
+    <ion-grid *ngIf='oPedidos; else showNoData' >
+      <ion-row>
+        <ion-col size='12' size-md size-sm>
+          <ion-row *ngFor="let item of (oPedidos.getATOArticulosItems())" class='row-bordered' justify-content-start align-items-start>
+            <ion-col size='6'><span class='xCantidad'align-self-start >x {{item.getCantidad()}}</span>{{item.getDescripcion()}}  </ion-col>
+            <ion-col size='2' align-self-center class='columnNumeric'>{{oPedidos.getPrecioFinalItemFormateado(item)}}</ion-col>
+            <ion-col size='4' align-self-center class='columnNumeric'>{{oPedidos.getSubTotalItemFormateado(item)}} </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col size='12' size-md size-sm>
+          <ion-row>
+            <ion-col size='4' offset='4' class='columnNumeric'>
+              Sub Total :
+            </ion-col>
+            <ion-col size='4' class='columnNumeric'	>
+              {{oPedidos.getSubTotalFormat()}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size='4' offset='4' class='columnNumeric' >
+              Total Igv:
+            </ion-col>
+            <ion-col size='4' class='columnNumeric'	>
+              {{oPedidos.getTotalIgvFormat()}}
+            </ion-col>
+          </ion-row>
+          <ion-row class='resaltado'>
+            <ion-col size='4' offset='4' class='columnNumeric' >
+              Total :
+            </ion-col>
+            <ion-col size='4' class='columnNumeric'	>
+              <span style='font-weight: bold'> {{oPedidos.getTotalPedidoFormat()}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size='6' offset='2' class='columnNumeric' >
+              (Total Descuento) :
+            </ion-col>
+            <ion-col size='4' class='columnNumeric'	>
+              ({{oPedidos.getTotalDsctoFormat()}})
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
+
+  <ng-template #ShowNoData>
+    <ion-item>No se encontraron artículos.</ion-item>
+  </ng-template>
+
+<ng-template #Opciones>
+    <ion-button *ngIf='oTabsOpciones.getTabSelected_id()==0' (click)="actionCancelar()">
+      <ion-icon slot='start' name="arrow-round-back"></ion-icon>
+    </ion-button>
+    <ion-button *ngIf='oTabsOpciones.getTabSelected_id()!=0' [fill]=oTabsOpciones.getTabButtons()[0].fill size='default' slot='end' [color]=oTabsOpciones.getTabButtons()[0].color (click)="actionSelectButtonTabOpciones(0)">
+      <ion-icon  name='add-circle-outline' ></ion-icon><span class='fontSize-xs'>{{oTabsOpciones.getTabButtons()[0].value}}</span>
+    </ion-button>
+    <ion-button *ngIf='oTabsOpciones.getTabSelected_id()==0 && oPedidos?.getATOArticulosItems().length > 0' [fill]=oTabsOpciones.getTabButtons()[1].fill size='default' slot='end'  [color]=oTabsOpciones.getTabButtons()[1].color (click)="actionSelectButtonTabOpciones(1)">
+      <ion-icon  name='cart' ></ion-icon><span class='fontSize-xs'>{{oTabsOpciones.getTabButtons()[1].value}}({{oPedidos?.getATOArticulosItems().length}})</span>
+    </ion-button>
+    <ion-button *ngIf='oTabsOpciones.getTabSelected_id()!=0' [fill]=oTabsOpciones.getTabButtons()[2].fill size='default' slot='end'  [color]=oTabsOpciones.getTabButtons()[2].color (click)="actionSelectButtonTabOpciones(2)">
+      <ion-icon  name='save' ></ion-icon><span class='fontSize-xs'>{{oTabsOpciones.getTabButtons()[2].value}}</span>
+    </ion-button>
+</ng-template>

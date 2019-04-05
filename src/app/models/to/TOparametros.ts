@@ -1,4 +1,4 @@
-// Generate by @vengardus 2019-03-08 16:53:04.749479
+// Generate by @vengardus 2019-03-27 15:03:50.315627
 
 export class TOParametros {
 
@@ -16,22 +16,34 @@ export class TOParametros {
    private isCredito:boolean;
    private isLogged:boolean;
    private isPrevPayment:boolean;
+   private isRecordarPassword:boolean;
+   private token:string;
+   private correlativoPedido:number;
+   private tipoCambioVenta:number;
+   private tipoCambioCompra:number;
 
-   constructor(itemDataStorage:any) {
-      this.login = itemDataStorage.login;
-      this.password = itemDataStorage.password;
-      this.nombreVendedor = itemDataStorage.nombreVendedor;
-      this.codigoVendedor = itemDataStorage.codigoVendedor;
-      this.fechaRuta = itemDataStorage.fechaRuta;
-      this.diaRuta = itemDataStorage.diaRuta;
-      this.zonaCod = itemDataStorage.zonaCod;
-      this.monedas_id = itemDataStorage.monedas_id;
-      this.isMonedaDoble = itemDataStorage.isMonedaDoble;
-      this.iva = itemDataStorage.iva;
-      this.isc = itemDataStorage.isc;
-      this.isCredito = itemDataStorage.isCredito;
-      this.isLogged = itemDataStorage.isLogged;
-      this.isPrevPayment = itemDataStorage.isPrevPayment;
+   constructor(itemDataStorage?:any) {
+      if ( itemDataStorage != null ) {
+         this.login = itemDataStorage.login;
+         this.password = itemDataStorage.password;
+         this.nombreVendedor = itemDataStorage.nombreVendedor;
+         this.codigoVendedor = itemDataStorage.codigoVendedor;
+         this.fechaRuta = itemDataStorage.fechaRuta;
+         this.diaRuta = itemDataStorage.diaRuta;
+         this.zonaCod = itemDataStorage.zonaCod;
+         this.monedas_id = itemDataStorage.monedas_id;
+         this.isMonedaDoble = itemDataStorage.isMonedaDoble;
+         this.iva = itemDataStorage.iva;
+         this.isc = itemDataStorage.isc;
+         this.isCredito = itemDataStorage.isCredito;
+         this.isLogged = itemDataStorage.isLogged;
+         this.isPrevPayment = itemDataStorage.isPrevPayment;
+         this.isRecordarPassword = itemDataStorage.isRecordarPassword;
+         this.token = itemDataStorage.token;
+         this.correlativoPedido = itemDataStorage.correlativoPedido;
+         this.tipoCambioVenta = itemDataStorage.tipoCambioVenta;
+         this.tipoCambioCompra = itemDataStorage.tipoCambioCompra;
+      }
    }
 
    getLogin():string { return this.login; }
@@ -75,5 +87,20 @@ export class TOParametros {
 
    getIsPrevPayment():boolean { return this.isPrevPayment; }
    setIsPrevPayment(value:boolean) { this.isPrevPayment = value; }
+
+   getIsRecordarPassword():boolean { return this.isRecordarPassword; }
+   setIsRecordarPassword(value:boolean) { this.isRecordarPassword = value; }
+
+   getToken():string { return this.token; }
+   setToken(value:string) { this.token = value; }
+
+   getCorrelativoPedido():number { return this.correlativoPedido; }
+   setCorrelativoPedido(value:number) { this.correlativoPedido = value; }
+
+   getTipoCambioVenta():number { return this.tipoCambioVenta; }
+   setTipoCambioVenta(value:number) { this.tipoCambioVenta = value; }
+
+   getTipoCambioCompra():number { return this.tipoCambioCompra; }
+   setTipoCambioCompra(value:number) { this.tipoCambioCompra = value; }
 
 }

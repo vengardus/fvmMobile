@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Pedidos del cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md='8' offset-md='2' size-sm='8' offset-sm='2'>
+        <ng-container *ngTemplateOutlet='main'></ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button (click)='actionSendPedidos()'>Send</ion-button>
+  <ion-button (click)='actionVerPedidos()'>Ver</ion-button>
+</ion-content>
+
+<ng-container *ngTemplateOutlet='messages'></ng-container>
+
+<ion-footer >
+  <ion-toolbar color='primary'>
+    <ng-container *ngTemplateOutlet='opciones'></ng-container>
+  </ion-toolbar>
+</ion-footer>
+
+<ng-template #main>
+      <ion-row class='titleGrid' >
+        <ion-col size='3' >
+          #Ped
+        </ion-col>
+        <ion-col size='2' > 
+          FP
+        </ion-col>
+        <ion-col size='2' >
+          Mon
+        </ion-col>
+        <ion-col size='4' class='numeric' >
+          Monto
+        </ion-col>
+        <ion-col size='1'>
+          <ion-icon name='sync' ></ion-icon>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor='let pedido of pedidos' >
+        <ion-col size='3' >
+          {{pedido.getId()}}
+        </ion-col>
+        <ion-col size='2' > 
+          {{pedido.getFormasPago_id()}}
+        </ion-col>
+        <ion-col size='2' >
+          {{pedido.getMonedas_id()}}
+        </ion-col>
+        <ion-col size='4' class='numeric' >
+          {{pedido.getTotalVenta()}}
+        </ion-col>
+        <ion-col size='1'>
+          <ion-icon *ngIf="pedido.getEstadoEnviado()==ESTADO_PEDIDO_ENVIADO" name='checkmark-circle' color='success'></ion-icon>
+        </ion-col>
+      </ion-row>
+
+</ng-template>
+
+<ng-template #opciones>
+    <ion-button (click)="actionCancelar()" slot='start'>
+      <ion-icon slot='start' name="arrow-round-back"></ion-icon>
+    </ion-button>
+    <ion-button (click)="actionNuevoPedido()" slot='end'>Nuevo
+    </ion-button>
+</ng-template>
+
+<ng-template #messages>
+  <ion-list lines='none' *ngIf="messages2.length>0">
+    <ion-item *ngFor='let msg of messages2; let i = index' color='danger'>
+      {{msg}}
+      <ion-button slot='end' color='danger' (click)='actionCloseMessage(i)'><ion-icon name='close'></ion-icon></ion-button>
+    </ion-item>
+  </ion-list>
+</ng-template>
+
+<ng-template #cabecera>
+   <ion-row>
+    <ion-col size-md='8' offset-md='2' size-sm='8' offset-sm='2'>
+       <ion-row class='titleGrid' >
+        <ion-col size='3' >
+          #Ped
+        </ion-col>
+        <ion-col size='2' > 
+          FP
+        </ion-col>
+        <ion-col size='2' >
+          Mon
+        </ion-col>
+        <ion-col size='4' class='numeric' >
+          Monto
+        </ion-col>
+        <ion-col size='1'>
+          <ion-icon name='sync' ></ion-icon>
+        </ion-col>
+      </ion-row> 
+    </ion-col>
+  </ion-row>
+</ng-template>

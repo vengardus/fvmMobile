@@ -12,3 +12,8 @@
      isCredito: boolean
      isLogged: boolean
      isPrevPayment: boolean
+     isRecordarPassword : boolean
+     token:string
+     correlativoPedido:number
+     tipoCambioVenta:number
+     tipoCambioCompra:number

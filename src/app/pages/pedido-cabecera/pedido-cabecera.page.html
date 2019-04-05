@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar color='primary'>
+    <ion-title>Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md='8' offset-md='2' size-sm='8' offset-sm='2'>
+        <ng-container *ngTemplateOutlet='main'></ng-container>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color='primary'>
+    <ng-container *ngTemplateOutlet='opciones'></ng-container>
+  </ion-toolbar>
+</ion-footer>
+
+<ng-template #main>
+
+  <ng-container *ngTemplateOutlet='messages'></ng-container>
+
+  <ion-list lines="none">
+    <ion-item>
+      <ion-label position="stacked">Forma de Pago</ion-label>
+      <select [(ngModel)]='form.selectFormasPago_id'>
+        <option value='' disabled selected>Seleccione una</option>
+        <option *ngFor='let option of form.selectFormasPagoOptions' [value]='option.id'>{{option.value}}</option>
+      </select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Moneda</ion-label>
+      <select [(ngModel)]='form.selectMonedas_id'>
+        <option value='' disabled selected>Seleccione una</option>
+        <option *ngFor='let option of form.selectMonedasOptions' [value]='option.id'>{{option.value}}</option>
+      </select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Dirección Despacho</ion-label>
+      <select [(ngModel)]='form.selectDireccionDespacho_id'>
+        <option value='' disabled selected>Seleccione una</option>
+        <option *ngFor='let option of form.selectDireccionDespachoOptions' [value]='option.id'>{{option.value}}</option>
+      </select>
+    </ion-item>
+  </ion-list>
+
+</ng-template>
+
+<ng-template #opciones>
+  <ion-button (click)="actionCancelar()" slot='start'>
+    <ion-icon slot='start' name="arrow-round-back"></ion-icon>
+  </ion-button>
+  <ion-button (click)="actionPedidoDetalle()" slot='end'>Continuar
+  </ion-button>
+</ng-template>
+
+<ng-template #messages>
+  <ion-list lines='none' *ngIf="messages.length>0">
+    <ion-item *ngFor='let msg of messages; let i = index' color='danger'>
+      {{msg}}
+      <ion-button slot='end' color='danger' (click)='actionCloseMessage(i)'><ion-icon name='close'></ion-icon></ion-button>
+    </ion-item>
+  </ion-list>
+</ng-template>

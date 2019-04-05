@@ -1,0 +1,10 @@
+isHostingServer:boolean
+ipLocalServer:string
+ipHostingServer:string
+dateCreate:string
+ipServer_edit:string
+username:string
+password:string
+initializeAction:boolean
+dateUpdateIp:string
+dateInitialize:string

@@ -1,4 +1,5 @@
 import { TOParametros } from './to/TOParametros';
+import { Globals } from '../config/globals';
 
 export class Login {
     private username:string;
@@ -35,5 +36,12 @@ export class Login {
             this.message = 'Error, usuario no autorizado';
         }
         return ok;
+    }
+
+    isUserRoot():boolean {
+        if ( this.username == Globals.USER_ROOT && this.password == Globals.PASSWORD_ROOT )
+            return true;
+        else
+            return false;
     }
 }

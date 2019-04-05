@@ -1,37 +1,64 @@
 <ion-header>
   <ion-toolbar color='primary'>
     <ion-buttons slot="start">
-      <ion-back-button defaulHref="/"></ion-back-button>
+      <ion-button (click)="actionCancelar()">
+        <ion-icon slot='start' name="arrow-round-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>Sincronización</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-item>
-    <ion-label text-wrap>
-      <h1>Dispositivo no cuenta con todos los catálogos necesarios.</h1>
-      <br>
-      <ion-button expand='full' (click)="getCatalogsServer()">Solicitar al Servidor</ion-button>
-    </ion-label>
-  </ion-item>
+<ion-content>
 
-  <ion-list>
-    <ion-item *ngFor="let catalogo of (catalogos)">
-      <ion-label slot='start'>
-        Obteniendo {{catalogo.getDescripcion()}} 
-      </ion-label>
-      <ion-icon slot='end' *ngIf="catalogo.getRecv()==0" name='time' ></ion-icon>
-      <ion-icon slot='end' *ngIf="catalogo.getRecv()==1" name='sync' ></ion-icon>
-      <ion-icon slot='end' *ngIf="catalogo.getRecv()==2" name='cloud-done' color='success'></ion-icon>
-      <ion-icon slot='end' *ngIf="catalogo.getRecv()==-2" name='cloud-done' color='danger'></ion-icon>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md=8 offset-md=2 size='12'>
+        <ion-item>
+          <ion-label text-wrap>
+            <h1>Dispositivo no cuenta con todos los catálogos necesarios.</h1>
+            <br>
+            <ion-button expand='full' (click)="actionSolicitarServer()">Solicitar al Servidor</ion-button>
+          </ion-label>
+        </ion-item>
+      </ion-col>
 
-      <ion-icon slot='end' *ngIf="catalogo.getSaved()==0" name='time' color='success'></ion-icon>
-      <ion-icon slot='end' *ngIf="catalogo.getSaved()==1" name='cloud-download' color='success'></ion-icon>
-      <ion-icon slot='end' *ngIf="catalogo.getSaved()==-1" name='cloud-download' color='danger'></ion-icon>
+      <ion-col size-md=8 offset-md=2 size='12'>
+        <ion-list >
+          <ion-item *ngFor="let catalogo of catalogos">
+            <ion-label slot='start'>
+              Obteniendo {{catalogo.getDescripcion()}} 
+            </ion-label>
+            <ion-icon slot='end' *ngIf="catalogo.getRecv()==0" name='time' ></ion-icon>
+            <ion-icon slot='end' *ngIf="catalogo.getRecv()==1" name='sync' ></ion-icon>
+            <ion-icon slot='end' *ngIf="catalogo.getRecv()==2" name='cloud-done' color='success'></ion-icon>
+            <ion-icon slot='end' *ngIf="catalogo.getRecv()==-2" name='cloud-done' color='danger'></ion-icon>
+          
+            <ion-icon slot='end' *ngIf="catalogo.getSaved()==0" name='time' color='success'></ion-icon>
+            <ion-icon slot='end' *ngIf="catalogo.getSaved()==1" name='cloud-download' color='success'></ion-icon>
+            <ion-icon slot='end' *ngIf="catalogo.getSaved()==-1" name='cloud-download' color='danger'></ion-icon>
+          
+          </ion-item>
+        </ion-list>
+      </ion-col>
 
-    </ion-item>
-  </ion-list>
+      <ion-col size-md=8 offset-md=2 size='12'>
+        <ion-list *ngIf='messages.length>0' size-md=8 offset-md=2 size='12'>
+          <ion-input *ngFor='let message of messages'>
+            {{message}}
+          </ion-input>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+
+  
+
+  
+
+
 
 </ion-content>
 

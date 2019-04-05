@@ -1,0 +1,16 @@
+.logo-img {
+    height: 100%;
+    object-fit: contain;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.logo-text{
+    align-content: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem
+}
+ion-col:hover {
+    background-color: lightblue;
+   }   

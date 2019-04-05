@@ -2,3 +2,10 @@
 cantidad:number
 isSelected : boolean
 isSugerido : boolean
+precioFinal: number
+subTotal : number
+subTotalAfectos : number
+subTotalInafectos : number
+subTotalIgv : number
+subTotalIsc : number
+subTotalDscto : number

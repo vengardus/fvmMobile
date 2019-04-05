@@ -1,0 +1,6 @@
+id:number
+tablaCod:string
+tabla_id:string
+descripcion:string
+glosa:string
+abrev:string

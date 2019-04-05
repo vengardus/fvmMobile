@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from 'src/app/services/storage.service';
 import { Globals } from 'src/app/config/globals';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { TOParametros } from '../../models/to/TOparametros';
 import { Clientes } from '../../models/clientes';
 import { TOClientes } from 'src/app/models/to/TOclientes';
+import { iSession } from 'src/app/models/session';
+import { ParametrosService } from 'src/app/services/parametros.service';
+import { ClientesService } from 'src/app/services/clientes.service';
 
 @Component({
   selector: 'app-clientes',
@@ -21,24 +23,35 @@ export class ClientesPage implements OnInit {
   searchValue = '';
 
   constructor(
-    private storageService:StorageService,
     private activatedRoute:ActivatedRoute,
-    private nav:NavController
+    private navController:NavController,
+    private platform:Platform,
+    private parametrosService:ParametrosService,
+    private clientesService:ClientesService
   ) { }
 
   ngOnInit() {
-    this.isRuta = this.activatedRoute.snapshot.paramMap.get('isRuta');
-    this.loadParametros();
-    this.loadClientes();
+    if ( this.platform.ready ) 
+      this.init();
   }
 
-  loadParametros() {
-    return this.storageService.getCatalog(Globals.CATALOG_PARAMETROS).then(data=>{
-      if (data) {
-        let oTOPametros:TOParametros = new TOParametros(data);
-        this.oTOParametros = oTOPametros;
-      }
+  init() {
+    this.isRuta = this.activatedRoute.snapshot.paramMap.get('isRuta');
+      this.loadParametros().then(ok=>{
+        if ( ok )
+          this.loadClientes();
+      });
+  }
+
+  loadParametros():Promise<boolean> {
+    return this.parametrosService.getParametros().then(aTOParametros=>{
+      if ( aTOParametros == null )
+        return false;
+      this.oTOParametros = aTOParametros[0];
+      console.log('this.otoparm', this.oTOParametros);
+      return true;
     })
+    .catch(()=>{return false;})
   }
 
   loadClientes() {
@@ -46,10 +59,9 @@ export class ClientesPage implements OnInit {
       this.message.push('Cargando Clientes en Ruta...');
     else
       this.message.push('Cargando Clientes Fuera de Ruta...');
-    return this.storageService.getCatalog(Globals.CATALOG_CLIENTES).then(data=>{
-      let oClientes : Clientes = new Clientes(data);
-      oClientes.getAll();
-      oClientes.filterByDiaRuta(this.isRuta, this.oTOParametros.getDiaRuta());
+    return this.clientesService.getClientes(this.isRuta, this.oTOParametros.getDiaRuta()).then(oClientes=>{
+      if ( oClientes == null )
+        return;
       this.oClientes = oClientes;
       this.message = [];
     })
@@ -71,15 +83,24 @@ export class ClientesPage implements OnInit {
     this.message=[];
   }
 
-  goInfoCliente(cliente:TOClientes) {
-    let aTOClientes: TOClientes[] = [];
-    aTOClientes.push(cliente);
-    this.storageService.putCatalog(Globals.CATALOG_TMP_CLIENTES, aTOClientes).then(()=>{
-      this.nav.navigateForward(`/clientes-info`);
+  goInfoCliente(oTOClientes:TOClientes) {
+    let session:iSession={
+      oTOClientes:oTOClientes,
+      isRuta:this.isRuta,
+      oTOPedidoCabecera:null,
+      oTOParametros:this.oTOParametros
+    }
+    console.log(session);
+    this.parametrosService.setSession(session).then(ok=>{
+      if ( ok )
+        this.navController.navigateForward(`/clientes-info`);
+      else
+        this.message.push(this.parametrosService.getMessage());
     })
-    .catch(()=>{
-      this.message.push('Ocurrió un error al guardar datos temporales.');
-    })
+  }
+
+  actionCancelar() {
+    this.navController.navigateRoot(['/menu']);
   }
 }
 
